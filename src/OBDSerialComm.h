@@ -4,7 +4,9 @@
 #include <Arduino.h>
 #include "definitions.h"
 
+#if BLUETOOTH_BUILTIN
 #include <BluetoothSerial.h>
+#endif
 
 
 class OBDSerialComm
