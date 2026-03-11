@@ -3,11 +3,21 @@
 
 #include <stdint.h>
 
-// true == We are running on hardware that has builtin Bluetooth
-// false == We are using hardware that has BT module attached via GPIO pins
-#define BLUETOOTH_BUILTIN true  
-
-#define USE_WIFI false
+// ESP32-S3/S2/C3 do NOT support classic Bluetooth (BluetoothSerial).
+// Force WiFi mode on those targets. Classic BT is only on original ESP32.
+#if defined(CONFIG_IDF_TARGET_ESP32S3) || defined(CONFIG_IDF_TARGET_ESP32S2) || defined(CONFIG_IDF_TARGET_ESP32C3)
+  #define BLUETOOTH_BUILTIN false
+  #ifndef USE_WIFI
+    #define USE_WIFI true
+  #endif
+#else
+  #ifndef BLUETOOTH_BUILTIN
+    #define BLUETOOTH_BUILTIN true
+  #endif
+  #ifndef USE_WIFI
+    #define USE_WIFI false
+  #endif
+#endif
 
 #define DO_DEBUG true
 #define DEBUG(x) do {if (DO_DEBUG) { Serial.println(x); } } while (0)
