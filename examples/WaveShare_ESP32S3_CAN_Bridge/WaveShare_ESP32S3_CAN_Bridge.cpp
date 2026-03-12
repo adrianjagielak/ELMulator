@@ -24,6 +24,7 @@
  *   5. In PyRen, select WiFi ELM327 adapter at 192.168.0.10:35000
  */
 
+#include <Arduino.h>
 #include <WiFi.h>
 #include <WiFiServer.h>
 #include "CANBus.h"
